@@ -1,0 +1,63 @@
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="row clearfix">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="header">
+                                <h2>
+                                    <strong>Admin Login</strong>
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <form [formGroup]="loginprocess" (ngSubmit)="onSubmit()">
+                        <div class="card">
+                            <div class="body">
+                                <div class="row clearfix">
+
+                                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-4">
+                                        <mat-label> Email :<i style="color: red;">*</i></mat-label> &nbsp;
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput formControlName="email" placeholder="Email" required>
+                                            <mat-error *ngIf="loginprocess.controls['email'].hasError('pattern')">Enter Valid Email.</mat-error>
+                                            <mat-error *ngIf="loginprocess.controls['email'].hasError('required')">email is mandatory.</mat-error>
+                                            <mat-error *ngIf="loginprocess.controls['email'].hasError('email')">Email id not valid.</mat-error>
+                                            <mat-error *ngIf="loginprocess.controls['email'].hasError('maxlength')">Maximum 30 characters.</mat-error>
+        
+                                        </mat-form-field>
+                                    </div>
+  
+                                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-4">
+                                        <mat-label>Password :<i style="color: red;">*</i></mat-label> &nbsp;
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput formControlName="password1" placeholder="Enter Password" required>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="body" style="text-align: center;">
+                                <div class="button-demo">
+                                  <button class="btn btn-primary btn-border-radius waves-effect" type="submit" id="submit" name="submit" value="Submit"
+                                                      [disabled]="loading">{{BTN_VAL}}  <i class="fa fa-spinner fa-spin" *ngIf="loading"></i></button>
+                                  <a mat-raised-button onclick="location.reload(true);" class="btn btn-danger">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+  
