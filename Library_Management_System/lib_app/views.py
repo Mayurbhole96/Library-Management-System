@@ -6,7 +6,7 @@ from rest_framework import viewsets, generics, status
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from lib_app.models import Book
-from lib_app.serializers import BookSerializer
+from lib_app.serializers import *
 
 # Create your views here.
 # def home(request):
@@ -18,12 +18,14 @@ class BookViewSet(viewsets.ModelViewSet):
     serializer_class = BookSerializer
 
     def list(self, request):
+        print("-------get---")
         book_obj = Book.objects.filter(is_deleted=False,is_active=True).order_by('-id')
-        serializer = self.get_serializer(book_obj, many=True)
+        serializer = BookGetSerializer(book_obj, many=True)
+        print(serializer.data,'----')
         return Response(serializer.data) 
 
     def create(self, request):
-        print(request.data,'----')
+        print("------create---")
         serializer = BookSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -32,6 +34,7 @@ class BookViewSet(viewsets.ModelViewSet):
             return Response({"status":status.HTTP_400_BAD_REQUEST,"message":serializer.errors},status=status.HTTP_400_BAD_REQUEST)
     
     def update(self, request, pk=None, partial=True):
+        print("-------update---")
         channel_obj = Book.objects.get(id=pk)
         serializer = BookSerializer(channel_obj,data=request.data, partial=True)
         if serializer.is_valid():

@@ -8,11 +8,12 @@ from django.urls.conf import re_path
 from . import views
 
 router = routers.DefaultRouter()
-router.register(r'book', views.BookViewSet, basename = 'book')
-router.register(r'signup', views.SignupViewSet, basename = 'signup')
-router.register(r'login', views.LoginViewSet, basename = 'login')
+router.register('book', views.BookViewSet, basename = 'book')
+router.register('signup', views.SignupViewSet, basename = 'signup')
+router.register('login', views.LoginViewSet, basename = 'login')
 
 urlpatterns = [
     # path('', views.home, name='home'),
+    # path('book', views.BookViewSet.as_view({'get': 'list'}))
     path('', include(router.urls)),
 ]

@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class Book(models.Model):
     id = models.AutoField(primary_key=True)
     book_name = models.CharField(max_length=20,verbose_name='Book Name')
-    book_author = models.CharField(max_length=20,verbose_name='Book Auther')
+    book_author = models.CharField(max_length=20,verbose_name='Book Author')
     is_deleted = models.BooleanField(default=False, verbose_name="Is Deleted")
     is_active = models.BooleanField(default=True, verbose_name="Is Active")
     created_date_time = models.DateTimeField(
@@ -15,6 +15,9 @@ class Book(models.Model):
 
     class Meta:
         db_table = "tbl_book_mst"
+
+    def __str__(self):
+        return self.book_name     
 
     def delete(self):
         self.is_deleted = True

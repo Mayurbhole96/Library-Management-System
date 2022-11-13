@@ -4,21 +4,11 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http'
 import { Observable, throwError } from 'rxjs'
 import { environment } from 'src/environments/environment';
 
-// let APIUrl = "http://127.0.0.1:8000"
-
 @Injectable({
   providedIn: 'root'
 })
 
 export class SharedService {
-  // [x: string]: any;
-  
-  // constructor(private http:HttpClient) { }
-
-  // getBookData():Observable<any[]>{
-  //   return this.http.get<any[]>(this['APIUrl'] + '/book/');
-    
-  // }
   constructor(  private http : HttpClient
     ) { }
 
@@ -32,6 +22,8 @@ export class SharedService {
       .pipe(map(data => {
         var status=1
         data[status] = 1;
+        console.log(data[status],'----------------data-------');
+        
         return data;
       }),
         catchError(this.errorHandler));
@@ -46,6 +38,28 @@ export class SharedService {
         catchError(this.errorHandler)
       );
   }
+
+
+  // if (value.id) {
+  //   return this.http.put(`${environment.apiUrl}`.concat('/book/' + value.id + '/'), value)
+  //     .pipe(map(data => {
+  //       var status=1;
+  //       data[status] = 1;
+
+  //       return data;
+  //     }),
+  //       catchError(this.errorHandler));
+  // }
+  // else {
+  //   return this.http.post(`${environment.apiUrl}`.concat('/book/'), value)
+  //     .pipe(map(data => {
+  //       var status=2;
+  //       data[status] = 2;
+  //       return data;
+  //     }),
+  //       catchError(this.errorHandler)
+  //     );
+  // }
   }
 
   deleteBookData(id:any) {

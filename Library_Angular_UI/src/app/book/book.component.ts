@@ -14,7 +14,7 @@ export class BookComponent implements OnInit {
   displayColumns = [
     'actions',
     'book_name',
-    'book_auther'
+    'book_author'
   ];
 
   bookForm!: FormGroup;
@@ -40,7 +40,8 @@ export class BookComponent implements OnInit {
     this.showList()
     this.bookForm = this.formBuilder.group({
       book_name: ['',[Validators.required, Validators.maxLength(20), Validators.pattern("^[a-zA-Z0-9_ ]*$")]],
-      book_auther: [''],
+      book_author: [''],
+      id: [''],
       is_active: true,
       is_deleted: false,
       updated_date_time:this.Updated_Date_Time
@@ -51,6 +52,8 @@ export class BookComponent implements OnInit {
     this.btn_list=false;
 
     this.sharedservice.getBookData().subscribe((data)=>{
+      console.log(data,'====');
+      
       this.bookdata = data;
     });
   }
@@ -58,7 +61,7 @@ export class BookComponent implements OnInit {
   editBookData(book:any){
     this.bookForm.patchValue({
       book_name: book.book_name,
-      book_auther: book.book_auther,
+      book_author: book.book_author,
       id: book.id,
       updated_date_time:this.Updated_Date_Time
     });
@@ -78,7 +81,7 @@ export class BookComponent implements OnInit {
   viewAllMasterData(book:any){
     this.bookForm.patchValue({
       book_name: book.book_name,
-      book_auther: book.book_auther,
+      book_author: book.book_author,
       id: book.id,
     });
 
@@ -93,15 +96,6 @@ export class BookComponent implements OnInit {
       this.list_title=false;
       this.submit=false;
 		}
-  }
-
-  showSwalMassage(massage: any,icon: any): void {
-    Swal.fire({
-      title: massage,
-      icon: icon,
-      timer: 2000,
-      showConfirmButton: false
-    });
   }
 
   deleteBookData(id:any){
@@ -147,46 +141,55 @@ export class BookComponent implements OnInit {
     this.new_entry_title=false;
   }
 
+  showSwalMassage(massage: any,icon: any): void {
+    Swal.fire({
+      title: massage,
+      icon: icon,
+      timer: 2000,
+      showConfirmButton: false
+    });
+  }
+
   // tbl_FilterDatatable(value:string) {
   //   this.bookdata.filter = value.trim().toLocaleLowerCase();
   // }
 
   onSubmit() {
     this.submitted = true;
-    // if(this.bookdata){
-    //   for(let res in this.bookdata.filteredData){
-    //     if(this.BTN_VAL=='Update' && this.bookdata.filteredData[res].id != this.bookForm.value.id && this.bookdata.filteredData[res].book_name==this.bookForm.value.book_name){
+    if(this.bookdata){
+      for(let res in this.bookdata){
+        if(this.BTN_VAL=='Update' && this.bookdata[res].id != this.bookForm.value.id && this.bookdata[res].book_name==this.bookForm.value.book_name){
 
-    //       Swal.fire({
-    //         title: 'Record Already Exist!',
-    //         text: 'Book Name should be unique',
-    //         icon: 'warning',
-    //         showConfirmButton: false
-    //       });
-    //       return;
-    //     }
-    //     if(this.BTN_VAL=='Submit' && this.bookdata.filteredData[res].book_name==this.bookForm.value.book_name){
-    //       Swal.fire({
-    //         title: 'Record Already Exist!',
-    //         text: 'Book Name should be unique',
-    //         icon: 'warning',
-    //         showConfirmButton: false
-    //       });
-    //       return;
-    //     }
-    //   }
-    // }
+          Swal.fire({
+            title: 'Record Already Exist!',
+            text: 'Book Name should be unique',
+            icon: 'warning',
+            showConfirmButton: false
+          });
+          return;
+        }
+        if(this.BTN_VAL=='Submit' && this.bookdata[res].book_name==this.bookForm.value.book_name){
+          Swal.fire({
+            title: 'Record Already Exist!',
+            text: 'Book Name should be unique',
+            icon: 'warning',
+            showConfirmButton: false
+          });
+          return;
+        }
+      }
+    }
     if (this.bookForm.invalid) {
         return;
     }
     else{
          this.sharedservice.saveBookData(this.bookForm.value).subscribe((data:any)=>{
-            if (data['status'] == 1) {
-              this.showList();
+            if (data['status'] == "Record Updated Successfully") {
+              // this.showList();
               this.showSwalMassage('Your record has been updated successfully!','success')
             }
-            else if(data['status'] == 2) {
-              this.showList();
+            else if(data['status'] == "Record Created Successfully") {
+              // this.showList();
               this.showSwalMassage('Your record has been added successfully!','success')
             }
             this.router.navigate(['/book']).then(() => {
@@ -207,5 +210,5 @@ export class BookComponent implements OnInit {
 export interface bookMasterElement {
   id:any;
   book_name:string;
-  book_auther:string
+  book_author:string;
 }

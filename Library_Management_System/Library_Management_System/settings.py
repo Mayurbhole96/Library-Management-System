@@ -11,9 +11,13 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR,"media")
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,22 +29,27 @@ SECRET_KEY = 'django-insecure-vkm+_o&h)_ru25z9#&ryn9ra5q)#n&*^6j28$*e4*^v)ja*=k)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 CORS_ORIGIN_WHITELIST = [
-    'http://localhost:4200',
+   'http://localhost:4200',
+   'http://localhost:8000'
 ]
-
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
 # Application definition
 
 INSTALLED_APPS = [
-    'lib_app',
+    # 'lib_app',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'lib_app.apps.LibAppConfig',
+    'rest_framework',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -51,6 +60,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'Library_Management_System.urls'
@@ -78,16 +89,20 @@ WSGI_APPLICATION = 'Library_Management_System.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',  
+    #     'NAME': 'library_management',  
+    #     'USER': 'root',  
+    #     'PASSWORD':'',  
+    #     'HOST': '127.0.0.1',  
+    #     'PORT': '3306',  
+    #     'OPTIONS': {  
+    #         'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"  
+    #     }
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.mysql',  
-        'NAME': 'library_management',  
-        'USER': 'root',  
-        'PASSWORD':'',  
-        'HOST': '127.0.0.1',  
-        'PORT': '3306',  
-        'OPTIONS': {  
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"  
-        }
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -131,4 +146,4 @@ STATIC_URL = '/static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

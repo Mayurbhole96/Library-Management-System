@@ -64,10 +64,10 @@
                                         <div class="form-group">
                                             <mat-label> Book Auther :<i style="color: red;">*</i></mat-label> &nbsp;
                                             <mat-form-field class="example-full-width">
-                                                <input matInput formControlName="book_auther" placeholder="Book Auther" required>
-                                                <mat-error *ngIf="bookForm.controls['book_auther'].hasError('required')">This field is mandatory.</mat-error>
-                                                <mat-error *ngIf="bookForm.controls['book_auther'].hasError('pattern')">Character(s) are not allowed.</mat-error>
-                                                <mat-error *ngIf="bookForm.controls['book_auther'].hasError('maxlength')">Maximum 20 characters.</mat-error>
+                                                <input matInput formControlName="book_author" placeholder="Book Auther" required>
+                                                <mat-error *ngIf="bookForm.controls['book_author'].hasError('required')">This field is mandatory.</mat-error>
+                                                <mat-error *ngIf="bookForm.controls['book_author'].hasError('pattern')">Character(s) are not allowed.</mat-error>
+                                                <mat-error *ngIf="bookForm.controls['book_author'].hasError('maxlength')">Maximum 20 characters.</mat-error>
                                             </mat-form-field>
                                         </div>
                                     </div>
@@ -100,13 +100,13 @@
                                         <mat-cell *matCellDef="let row;">
                                       <span>
                                                 <button class="btn tblActnBtn h-auto" data-toggle="modal" data-target="#editModal" (click)="viewAllMasterData(row)">
-                                                    <i class="material-icons">visibility</i>
+                                                    <i class="material-icons">👁</i>
                                                 </button>
                                                 <button class="btn tblActnBtn h-auto" data-toggle="modal" data-target="#editModal" (click)="editBookData(row)">
-                                                    <i class="material-icons">mode_edit</i>
+                                                    <i class="material-icons">✒</i>
                                                 </button>
                                                 <button class="btn tblActnBtn h-auto" (click)="deleteBookData(row.id)">
-                                                    <i class="material-icons">delete</i>
+                                                    <i class="material-icons">❌ </i>
                                                 </button>
                                             </span>
                                         </mat-cell>
@@ -115,9 +115,9 @@
                                         <mat-header-cell *matHeaderCellDef mat-sort-header style="color: white;">Books</mat-header-cell>
                                         <mat-cell *matCellDef="let row" > {{row.book_name}}</mat-cell>
                                     </ng-container>
-                                    <ng-container matColumnDef="book_auther">
+                                    <ng-container matColumnDef="book_author">
                                         <mat-header-cell mat-header-cell *matHeaderCellDef style="color: white;">Authers</mat-header-cell>
-                                        <mat-cell mat-cell *matCellDef="let row" > {{row.book_auther}}</mat-cell>
+                                        <mat-cell mat-cell *matCellDef="let row" > {{row.book_author}}</mat-cell>
                                     </ng-container>
                                     <mat-header-row *matHeaderRowDef="displayColumns" style="background-color:#666666;"></mat-header-row>
                                     <mat-row *matRowDef="let row; columns: displayColumns;" [style.cursor]="'pointer'" matRipple>
